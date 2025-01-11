@@ -4,13 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.utilites.AbsolutePosition;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -22,11 +16,18 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...jj
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
+   // The robot's subsystems and commands are defined here...jj
+   /**
+    * The container for the robot. Contains subsystems, OI devices, and commands.
+    */
+   AbsolutePosition positionTracker;
 
-  }
+   public RobotContainer() {
+      positionTracker = new AbsolutePosition();
+   }
+
+   public void teleopPeriodic(){
+      positionTracker.updateXPos();
+      System.out.println(positionTracker.getXPosition());
+   }
 }
