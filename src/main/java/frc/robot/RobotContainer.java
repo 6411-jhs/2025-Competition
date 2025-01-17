@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.utilites.AbsolutePosition;
+
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -14,11 +16,18 @@ package frc.robot;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...jj
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
+   // The robot's subsystems and commands are defined here...jj
+   /**
+    * The container for the robot. Contains subsystems, OI devices, and commands.
+    */
+   AbsolutePosition positionTracker;
 
-  }
+   public RobotContainer() {
+      positionTracker = new AbsolutePosition();
+   }
+
+   public void teleopPeriodic(){
+      positionTracker.updateXPos();
+      System.out.println(positionTracker.getXPosition());
+   }
 }
