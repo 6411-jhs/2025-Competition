@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.DriveTrain;
+
 import frc.robot.utilites.AbsolutePosition;
 
 /**
@@ -21,9 +23,11 @@ public class RobotContainer {
     * The container for the robot. Contains subsystems, OI devices, and commands.
     */
    AbsolutePosition positionTracker;
+   DriveTrain driveTrain;
 
    public RobotContainer() {
-      positionTracker = new AbsolutePosition();
+      this.driveTrain = new DriveTrain();
+      this.positionTracker = new AbsolutePosition();
    }
 
    public void teleopPeriodic(){
