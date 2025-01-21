@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+
 import frc.robot.subsystems.DriveTrain;
 
 import frc.robot.utilites.AbsolutePosition;
@@ -18,20 +20,19 @@ import frc.robot.utilites.AbsolutePosition;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   // The robot's subsystems and commands are defined here...jj
-   /**
-    * The container for the robot. Contains subsystems, OI devices, and commands.
-    */
+   Joystick joystick;
+
    AbsolutePosition positionTracker;
    DriveTrain driveTrain;
 
    public RobotContainer() {
+      joystick = new Joystick(0);
+
       this.driveTrain = new DriveTrain();
       this.positionTracker = new AbsolutePosition();
    }
 
    public void teleopPeriodic(){
-      positionTracker.updateXPos();
-      System.out.println(positionTracker.getXPosition());
+      driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
    }
 }
