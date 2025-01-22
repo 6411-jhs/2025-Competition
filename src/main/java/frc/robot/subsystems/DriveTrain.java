@@ -1,14 +1,16 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.motorcontrol.VictorSP;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.math.geometry.Rotation2d;
+// import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
-public class DriveTrain {
+public class DriveTrain extends SubsystemBase {
     //IDS and control mode for the motor controllers
     private static final int BACK_LEFT_ID = 0;
     private static final int FRONT_LEFT_ID = 2;
