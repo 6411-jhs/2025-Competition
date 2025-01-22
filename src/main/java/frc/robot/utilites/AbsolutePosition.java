@@ -4,6 +4,19 @@ import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Timer;
 
 public class AbsolutePosition {
+   private static double roundToTens(double number){
+      int rounded = (int) (number * 10);
+      return rounded * 0.1;
+   }
+   private static double roundToHundreds(double number){
+      int rounded = (int) (number * 100);
+      return rounded * 0.01;
+   }
+   private static double roundToThousands(double number){
+      int rounded = (int) (number * 10000);
+      return rounded * 0.0001;
+   }
+
    BuiltInAccelerometer accelerometer;
    Timer timer;
 
@@ -30,7 +43,7 @@ public class AbsolutePosition {
    }
 
    public void updateTimer(){
-      dt = timer.get();
+      dt = roundToThousands(timer.get());
       timer.reset();
    }
    public double getTimerValue(){
@@ -43,17 +56,27 @@ public class AbsolutePosition {
    public void updateXPos(){
       updateTimer();
       xPosition = calculateXPosition();
-      xVelocity = calcaulateXVelocity();
+      xVelocity = calculateXVelocity();
    }
    public double getXPosition(){
       return xPosition;
    }
    private double calculateXPosition(){
-      double acc = accelerometer.getX();
+      double acc = roundToTens(accelerometer.getX());
       return (acc * Math.pow(dt,2) + (xVelocity * dt) + xPosition);
    }
-   private double calcaulateXVelocity(){
-      double acc = accelerometer.getX();
+   private double calculateXVelocity(){
+      double acc = roundToTens(accelerometer.getX());
+      // System.out.println(acc);
       return (acc * dt) + xVelocity;
    }
+
+   public void test(){
+      // System.out.println(accelerometer.getX() + " " + accelerometer.getY() + " " + accelerometer.getZ());
+      updateTimer();
+      xVelocity = calculateXVelocity();
+      // System.out.println(dt);
+         System.out.println(roundToTens(accelerometer.getX()));
+   }
+
 }

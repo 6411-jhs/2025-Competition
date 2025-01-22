@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-
 import frc.robot.subsystems.DriveTrain;
 
 import frc.robot.utilites.AbsolutePosition;
@@ -30,9 +29,15 @@ public class RobotContainer {
 
       this.driveTrain = new DriveTrain();
       this.positionTracker = new AbsolutePosition();
+      
+      
    }
 
    public void teleopPeriodic(){
-      driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+      driveTrain.driveCartesian(joystick.getX() * 1, joystick.getY() * 1, joystick.getZ() * 1);
+   }
+
+   public void test(){
+      positionTracker.test();
    }
 }
