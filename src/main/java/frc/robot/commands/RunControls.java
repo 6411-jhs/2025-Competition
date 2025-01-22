@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj.Joystick;
 //todo - Add power limiter
 
 public class RunControls extends Command {
+   public enum ControlMode {
+      XboxController,
+      Joystick
+   }
    DriveTrain driveTrain;
 
    private XboxController xboxController;
@@ -68,9 +72,4 @@ public class RunControls extends Command {
    public boolean isFinished() {
       return false;
    }
-}
-
-enum ControlMode {
-   XboxController,
-   Joystick
 }

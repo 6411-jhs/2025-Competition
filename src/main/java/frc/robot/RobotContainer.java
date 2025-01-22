@@ -4,35 +4,55 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+//Subsystems
 import frc.robot.subsystems.DriveTrain;
 
+//Commands
+import frc.robot.commands.RunControls;
+import frc.robot.commands.RunControls.ControlMode;
+//Other
 import frc.robot.utilites.AbsolutePosition;
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
-   Joystick joystick;
-
-   AbsolutePosition positionTracker;
+   //Subsystems
    DriveTrain driveTrain;
 
-   public RobotContainer() {
-      joystick = new Joystick(0);
+   //Commands
+   RunControls runControls;
 
+   //Other
+   AbsolutePosition positionTracker;
+
+   //Interrupters
+   private boolean teleopEnded;
+
+   public RobotContainer() {
       this.driveTrain = new DriveTrain();
+
+      this.runControls = new RunControls(driveTrain);
+      runControls.setDriveTrainControl(ControlMode.Joystick);
+
       this.positionTracker = new AbsolutePosition();
    }
 
-   public void teleopPeriodic(){
-      driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+   /**Schedules the necessary commands to be ran during teleop*/
+   public void startTeleop(){
+      //Resets the interrupting condition
+      teleopEnded = false;
+      //Combines all needed commands into a single composite
+      Command mainCommand = Commands.parallel(
+         runControls
+      );
+      //Sets an interruption function. If teleopEnded gets set to true, mainCommand will stop running.
+      mainCommand.until(() -> teleopEnded);
+
+      CommandScheduler.getInstance().schedule(mainCommand);
+   }
+   /**Stops the commands that are running in teleop */
+   public void endTeleop(){
+      teleopEnded = true;
    }
 }
