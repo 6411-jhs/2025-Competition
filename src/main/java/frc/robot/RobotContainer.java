@@ -5,7 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.control.DriveTrain;
+import frc.robot.control.StageThreeLatch;
+import frc.robot.control.StageTwoLatch;
 import frc.robot.utilites.AbsolutePosition;
 
 /**
@@ -19,18 +22,34 @@ import frc.robot.utilites.AbsolutePosition;
  */
 public class RobotContainer {
    Joystick joystick;
+   XboxController xbox;
 
    AbsolutePosition positionTracker;
    DriveTrain driveTrain;
 
+   StageTwoLatch stageTwoLatch;
+   StageThreeLatch stageThreeLatch;
+
    public RobotContainer() {
-      joystick = new Joystick(0);
+      // joystick = new Joystick(0);
+      this.xbox = new XboxController(0);
 
       this.driveTrain = new DriveTrain();
-      this.positionTracker = new AbsolutePosition();
+      // this.positionTracker = new AbsolutePosition();
+      this.stageTwoLatch = new StageTwoLatch();
+      this.stageThreeLatch = new StageThreeLatch();
    }
 
    public void teleopPeriodic(){
-      driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+      // driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+      if (xbox.getAButton()){
+         stageTwoLatch.setServo(90);
+         // stageThreeLatch.setLeftServo(90);
+         // stageThreeLatch.setRightServo(90);
+      } else {
+         stageTwoLatch.setServo(0);
+         // stageThreeLatch.setLeftServo(0);
+         // stageThreeLatch.setRightServo(0);
+      }
    }
 }
