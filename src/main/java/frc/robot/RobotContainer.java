@@ -45,5 +45,8 @@ public class RobotContainer {
          elevator.setVortex(0);
          // elevator.setNeo(0);
       }
+
+      elevator.logVortexEncoders();
+      // elevator.logNeoEncoder();
    }
 }
