@@ -5,7 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.control.DriveTrain;
+import frc.robot.control.Elevator;
 import frc.robot.utilites.AbsolutePosition;
 
 /**
@@ -19,18 +21,26 @@ import frc.robot.utilites.AbsolutePosition;
  */
 public class RobotContainer {
    Joystick joystick;
+   XboxController xbox;
 
    AbsolutePosition positionTracker;
    DriveTrain driveTrain;
+   Elevator elevator;
 
    public RobotContainer() {
-      joystick = new Joystick(0);
+      // joystick = new Joystick(0);
+      this.xbox = new XboxController(0);
 
       this.driveTrain = new DriveTrain();
-      this.positionTracker = new AbsolutePosition();
+      this.elevator = new Elevator();
+      // this.positionTracker = new AbsolutePosition();
    }
 
    public void teleopPeriodic(){
-      driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+      // driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
+      if (xbox.getAButton()){
+         elevator.setVortex(0.1);
+         // elevator.setNeo(0.1);
+      }
    }
 }
