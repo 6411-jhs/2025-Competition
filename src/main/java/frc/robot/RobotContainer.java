@@ -41,6 +41,9 @@ public class RobotContainer {
       if (xbox.getAButton()){
          elevator.setVortex(0.1);
          // elevator.setNeo(0.1);
+      } else {
+         elevator.setVortex(0);
+         // elevator.setNeo(0);
       }
    }
 }
