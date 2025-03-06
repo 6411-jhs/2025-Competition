@@ -5,9 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-
-import frc.robot.subsystems.DriveTrain;
-
+import frc.robot.control.DriveTrain;
 import frc.robot.utilites.AbsolutePosition;
 
 /**
