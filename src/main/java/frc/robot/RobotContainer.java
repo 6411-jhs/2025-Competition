@@ -4,10 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.Joystick;
 
-import frc.robot.utilites.AbsolutePosition;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -19,25 +20,25 @@ import frc.robot.utilites.AbsolutePosition;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   Joystick joystick;
+   private XboxController xbox;
+   // private Joystick joystick;
 
-   AbsolutePosition positionTracker;
-   DriveTrain driveTrain;
+   private DriveTrain driveTrain;
+   private DriveTrainControls driveTrainControls;
+
+   private static final int XBOX_PORT = 0;
+   // private static final int JOYSTICK_PORT = 0;
 
    public RobotContainer() {
-      joystick = new Joystick(0);
-
+      this.xbox = new XboxController(XBOX_PORT);
+      // this.joystick = new Joystick(JOYSTICK_PORT);
+      
       this.driveTrain = new DriveTrain();
-      this.positionTracker = new AbsolutePosition();
-      
-      
+
+      this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
    }
 
-   public void teleopPeriodic(){
-      driveTrain.driveCartesian(joystick.getX() * 1, joystick.getY() * 1, joystick.getZ() * 1);
-   }
-
-   public void test(){
-      positionTracker.test();
+   public void startTeleop(){
+      driveTrain.setDefaultCommand(driveTrainControls);
    }
 }
