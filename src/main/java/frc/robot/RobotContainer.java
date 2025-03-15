@@ -5,9 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -26,14 +26,17 @@ public class RobotContainer {
    private DriveTrain driveTrain;
    private DriveTrainControls driveTrainControls;
 
+   private Taxi taxiAuto;
+
    private static final int XBOX_PORT = 0;
 
    public RobotContainer() {
       this.xbox = new XboxController(XBOX_PORT);
 
       this.driveTrain = new DriveTrain();
-
       this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
+
+      this.taxiAuto = new Taxi(driveTrain, 0.6);
    }
 
    public void startTeleop() {
@@ -41,7 +44,6 @@ public class RobotContainer {
    }
 
    public Command getAutonomousCommand() {
-      Command autoCommand = new RunCommand(() -> driveTrain.driveCartesian(0, -0.5, 0), driveTrain).withTimeout(.6);
-      return autoCommand;
+      return taxiAuto;
    }
 }
