@@ -5,8 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -24,31 +22,22 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
    private XboxController xbox;
-   // private Joystick joystick;
 
    private DriveTrain driveTrain;
    private DriveTrainControls driveTrainControls;
 
    private static final int XBOX_PORT = 0;
-   // private static final int JOYSTICK_PORT = 0;
 
    public RobotContainer() {
       this.xbox = new XboxController(XBOX_PORT);
-      // this.joystick = new Joystick(JOYSTICK_PORT);
 
       this.driveTrain = new DriveTrain();
 
       this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
-
-      driveTrain.setDefaultCommand(driveTrainControls);
-      // CommandScheduler.getInstance().setDefaultCommand(driveTrain,
-      // driveTrainControls);
    }
 
    public void startTeleop() {
-      // driveTrain.setDefaultCommand(driveTrainControls);
-      // CommandScheduler.getInstance().setDefaultCommand(driveTrain,
-      // driveTrainControls);
+      driveTrain.setDefaultCommand(driveTrainControls);
    }
 
    public Command getAutonomousCommand() {
