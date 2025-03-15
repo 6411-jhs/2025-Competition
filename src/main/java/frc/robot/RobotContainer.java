@@ -6,9 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.Joystick;
-
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -32,13 +35,24 @@ public class RobotContainer {
    public RobotContainer() {
       this.xbox = new XboxController(XBOX_PORT);
       // this.joystick = new Joystick(JOYSTICK_PORT);
-      
+
       this.driveTrain = new DriveTrain();
 
       this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
+
+      driveTrain.setDefaultCommand(driveTrainControls);
+      // CommandScheduler.getInstance().setDefaultCommand(driveTrain,
+      // driveTrainControls);
    }
 
-   public void startTeleop(){
-      driveTrain.setDefaultCommand(driveTrainControls);
+   public void startTeleop() {
+      // driveTrain.setDefaultCommand(driveTrainControls);
+      // CommandScheduler.getInstance().setDefaultCommand(driveTrain,
+      // driveTrainControls);
+   }
+
+   public Command getAutonomousCommand() {
+      Command autoCommand = new RunCommand(() -> driveTrain.driveCartesian(0, -0.5, 0), driveTrain).withTimeout(.6);
+      return autoCommand;
    }
 }

@@ -14,6 +14,10 @@ public class DriveTrainControls extends Command {
     public DriveTrainControls(XboxController xbox, DriveTrain driveTrain){
         this.xbox = xbox;
         this.driveTrain = driveTrain;
+
+        addRequirements(driveTrain);
+
+        driveTrain.driveCartesian(0, 0, 0);
     }
 
     @Override
