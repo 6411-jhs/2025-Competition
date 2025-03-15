@@ -4,11 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.control.DriveTrain;
-import frc.robot.control.Elevator;
-import frc.robot.utilites.AbsolutePosition;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -20,30 +20,31 @@ import frc.robot.utilites.AbsolutePosition;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   Joystick joystick;
-   XboxController xbox;
+   private XboxController xbox;
 
-   AbsolutePosition positionTracker;
-   DriveTrain driveTrain;
-   Elevator elevator;
+   private DriveTrain driveTrain;
+   private DriveTrainControls driveTrainControls;
+
+   private Taxi taxiAuto;
+
+   private static final int XBOX_PORT = 0;
 
    public RobotContainer() {
-      // joystick = new Joystick(0);
-      this.xbox = new XboxController(0);
+      this.xbox = new XboxController(XBOX_PORT);
 
       this.driveTrain = new DriveTrain();
-      this.elevator = new Elevator();
-      // this.positionTracker = new AbsolutePosition();
+      this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
+
+      this.taxiAuto = new Taxi(driveTrain, 0.6);
+
+      driveTrain.setDefaultCommand(driveTrainControls);
    }
 
-   public void teleopPeriodic(){
-      // driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
-      if (xbox.getAButton()){
-         elevator.setVortex(0.1);
-         // elevator.setNeo(0.1);
-      } else {
-         elevator.setVortex(0);
-         // elevator.setNeo(0);
-      }
+   public void startTeleop() {
+      driveTrain.setDefaultCommand(driveTrainControls);
+   }
+
+   public Command getAutonomousCommand() {
+      return taxiAuto;
    }
 }
