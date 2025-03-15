@@ -24,7 +24,7 @@ public class Taxi extends Command {
    @Override
    public void execute() {
       executeCount++;
-      driveTrain.driveCartesian(0, 0.5, 0);
+      driveTrain.driveCartesian(0, -0.5, 0);
    }
 
    @Override
