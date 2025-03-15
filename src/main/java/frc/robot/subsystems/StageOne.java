@@ -20,7 +20,7 @@ public class StageOne extends SubsystemBase {
    private SparkAbsoluteEncoder leftVortexEncoder;
    private SparkAbsoluteEncoder rightVortexEncoder;
 
-   private boolean enabled = false;
+   private boolean enabled = true;
 
    public StageOne(){
       this.leftVortex = new SparkFlex(LEFT_VORTEX_ID, MotorType.kBrushless);
@@ -29,10 +29,18 @@ public class StageOne extends SubsystemBase {
       this.leftVortexEncoder = leftVortex.getAbsoluteEncoder();
       this.rightVortexEncoder = rightVortex.getAbsoluteEncoder();
       
+      rightVortex.configure(
+         new SparkFlexConfig()
+            .inverted(false)
+            .disableFollowerMode(), 
+         ResetMode.kNoResetSafeParameters, 
+         PersistMode.kPersistParameters
+      );
+
       leftVortex.configure(
          new SparkFlexConfig()
-            .inverted(true)
-            .follow(rightVortex), 
+            .inverted(false)
+            .disableFollowerMode(), 
          ResetMode.kNoResetSafeParameters, 
          PersistMode.kPersistParameters
       );
@@ -41,6 +49,7 @@ public class StageOne extends SubsystemBase {
    public void set(double power){
       if (enabled){
          rightVortex.set(power);
+         leftVortex.set(-power);
       }
    }
 

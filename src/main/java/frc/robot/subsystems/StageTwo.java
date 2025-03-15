@@ -12,7 +12,7 @@ public class StageTwo extends SubsystemBase {
    private SparkMax neo;
    private SparkAbsoluteEncoder neoEncoder;
 
-   private boolean enabled = true;
+   private boolean enabled = false;
 
    public StageTwo(){
       this.neo = new SparkMax(NEO_ID, MotorType.kBrushless);

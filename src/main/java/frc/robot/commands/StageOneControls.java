@@ -9,7 +9,7 @@ public class StageOneControls extends Command {
    private XboxController xbox;
    private StageOne stageOne;
 
-   private double maxSpeed = 0.3;
+   private double maxSpeed = 0.5;
 
    public StageOneControls(XboxController xbox, StageOne stageOne){
       this.xbox = xbox;
@@ -25,7 +25,7 @@ public class StageOneControls extends Command {
 
    @Override
    public void execute() {
-      if (xbox.getRightBumperButton() || xbox.getLeftBumperButton()){
+      if (xbox.getRightBumperButtonPressed() || xbox.getLeftBumperButtonPressed()){
          stageOne.setEnabled(!stageOne.getEnabled());
       }
       stageOne.set((xbox.getRightTriggerAxis() - xbox.getLeftTriggerAxis()) * maxSpeed);
