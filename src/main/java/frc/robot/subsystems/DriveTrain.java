@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
     //IDS and control mode for the motor controllers
-    private static final int BACK_LEFT_ID = 1;
-    private static final int FRONT_LEFT_ID = 2;
-    private static final int BACK_RIGHT_ID = 3;
-    private static final int FRONT_RIGHT_ID = 4;
+    private static final int BACK_LEFT_ID = 2;
+    private static final int FRONT_LEFT_ID = 3;
+    private static final int BACK_RIGHT_ID = 4;
+    private static final int FRONT_RIGHT_ID = 5;
 
     private SparkMax backLeftMotor;
     private SparkMax frontLeftMotor;

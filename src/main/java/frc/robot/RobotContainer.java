@@ -5,10 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.Joystick;
-
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -21,24 +21,38 @@ import frc.robot.commands.*;
  */
 public class RobotContainer {
    private XboxController xbox;
-   // private Joystick joystick;
 
    private DriveTrain driveTrain;
    private DriveTrainControls driveTrainControls;
+   private StageOne stageOne;
+   private StageOneControls stageOneControls;
+   private StageTwo stageTwo;
+   private StageTwoControls stageTwoControls;
+
+   private Taxi taxiAuto;
 
    private static final int XBOX_PORT = 0;
-   // private static final int JOYSTICK_PORT = 0;
 
    public RobotContainer() {
       this.xbox = new XboxController(XBOX_PORT);
-      // this.joystick = new Joystick(JOYSTICK_PORT);
-      
-      this.driveTrain = new DriveTrain();
 
+      this.driveTrain = new DriveTrain();
       this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
+      this.stageOne = new StageOne();
+      this.stageOneControls = new StageOneControls(xbox, stageOne);
+      this.stageTwo = new StageTwo();
+      this.stageTwoControls = new StageTwoControls(xbox, stageTwo);
+
+      this.taxiAuto = new Taxi(driveTrain, 0.6);
    }
 
-   public void startTeleop(){
+   public void startTeleop() {
       driveTrain.setDefaultCommand(driveTrainControls);
+      stageOne.setDefaultCommand(stageOneControls);
+      stageTwo.setDefaultCommand(stageTwoControls);
+   }
+
+   public Command getAutonomousCommand() {
+      return taxiAuto;
    }
 }
