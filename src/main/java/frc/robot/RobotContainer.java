@@ -4,12 +4,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.control.DriveTrain;
-import frc.robot.control.StageThreeLatch;
-import frc.robot.control.StageTwoLatch;
-import frc.robot.utilites.AbsolutePosition;
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
+
+import edu.wpi.first.wpilibj2.command.Command;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -21,35 +21,40 @@ import frc.robot.utilites.AbsolutePosition;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   Joystick joystick;
-   XboxController xbox;
+   private XboxController xbox;
 
-   AbsolutePosition positionTracker;
-   DriveTrain driveTrain;
+   private DriveTrain driveTrain;
+   private DriveTrainControls driveTrainControls;
+   private StageOneLatch stageOneLatch;
+   private StageOneLatchControl stageOneLatchControl;
+   private StageTwoLatch stageTwoLatch;
+   private StageTwoLatchControl stageTwoLatchControl;
 
-   StageTwoLatch stageTwoLatch;
-   StageThreeLatch stageThreeLatch;
+   private Taxi taxiAuto;
+
+   private static final int XBOX_PORT = 0;
 
    public RobotContainer() {
-      // joystick = new Joystick(0);
       this.xbox = new XboxController(0);
+      this.xbox = new XboxController(XBOX_PORT);
 
       this.driveTrain = new DriveTrain();
-      // this.positionTracker = new AbsolutePosition();
+      this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
+      this.stageOneLatch = new StageOneLatch();
+      this.stageOneLatchControl = new StageOneLatchControl(xbox, stageOneLatch);
       this.stageTwoLatch = new StageTwoLatch();
-      this.stageThreeLatch = new StageThreeLatch();
+      this.stageTwoLatchControl = new StageTwoLatchControl(xbox, stageTwoLatch);
+
+      this.taxiAuto = new Taxi(driveTrain, 0.6);
    }
 
-   public void teleopPeriodic(){
-      // driveTrain.driveCartesian(joystick.getX() * 0.5, joystick.getY() * 0.5, joystick.getZ() * 0.5);
-      if (xbox.getAButton()){
-         stageTwoLatch.setServo(90);
-         // stageThreeLatch.setLeftServo(90);
-         // stageThreeLatch.setRightServo(90);
-      } else {
-         stageTwoLatch.setServo(0);
-         // stageThreeLatch.setLeftServo(0);
-         // stageThreeLatch.setRightServo(0);
-      }
+   public void startTeleop() {
+      driveTrain.setDefaultCommand(driveTrainControls);
+      stageOneLatch.setDefaultCommand(stageOneLatchControl);
+      stageTwoLatch.setDefaultCommand(stageTwoLatchControl);
+   }
+
+   public Command getAutonomousCommand() {
+      return taxiAuto;
    }
 }

@@ -1,20 +1,21 @@
-package frc.robot.control;
+package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class StageTwoLatch {
+public class StageOneLatch extends SubsystemBase {
    private static final int SERVO_PWM_ID = 0;
 
    private Servo mainServo;
 
-   public StageTwoLatch(){
+   public StageOneLatch(){
       this.mainServo = new Servo(SERVO_PWM_ID);
    }
 
    public void setServo(double degree){
       mainServo.setAngle(degree);;
    }
-   public void logServoDegree(){
-      System.out.println(mainServo.getAngle());
+   public double getServo(){
+      return mainServo.getAngle();
    }
 }
