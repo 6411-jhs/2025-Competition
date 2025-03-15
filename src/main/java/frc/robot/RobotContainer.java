@@ -42,7 +42,6 @@ public class RobotContainer {
 
    public void startTeleop() {
       driveTrain.setDefaultCommand(driveTrainControls);
-      driveTrain.setDefaultCommand(driveTrainControls);
    }
 
    public Command getAutonomousCommand() {
