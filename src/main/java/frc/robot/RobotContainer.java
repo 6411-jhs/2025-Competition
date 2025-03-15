@@ -27,6 +27,10 @@ public class RobotContainer {
    private DriveTrainControls driveTrainControls;
    private Feeder feeder;
    private FeederControls feederControls;
+   private StageOne stageOne;
+   private StageOneControls stageOneControls;
+   private StageTwo stageTwo;
+   private StageTwoControls stageTwoControls;
 
    private Taxi taxiAuto;
 
@@ -39,6 +43,10 @@ public class RobotContainer {
       this.driveTrainControls = new DriveTrainControls(xbox, driveTrain);
       this.feeder = new Feeder();
       this.feederControls = new FeederControls(xbox, feeder);
+      this.stageOne = new StageOne();
+      this.stageOneControls = new StageOneControls(xbox, stageOne);
+      this.stageTwo = new StageTwo();
+      this.stageTwoControls = new StageTwoControls(xbox, stageTwo);
 
       this.taxiAuto = new Taxi(driveTrain, 0.6);
    }
@@ -46,6 +54,8 @@ public class RobotContainer {
    public void startTeleop() {
       driveTrain.setDefaultCommand(driveTrainControls);
       feeder.setDefaultCommand(feederControls);
+      stageOne.setDefaultCommand(stageOneControls);
+      stageTwo.setDefaultCommand(stageTwoControls);
    }
 
    public Command getAutonomousCommand() {

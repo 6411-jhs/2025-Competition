@@ -80,10 +80,10 @@ public class Robot extends TimedRobot {
 
    @Override
    public void teleopInit() {
-      robotContainer.startTeleop();
       if (auto != null){
          auto.cancel();
       }
+      robotContainer.startTeleop();
    }
 
    /** This function is called periodically during operator control. */

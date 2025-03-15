@@ -12,7 +12,7 @@ public class Feeder extends SubsystemBase {
    private SparkMax miniNeo;
    private SparkAbsoluteEncoder encoder;
 
-   private double maxSpeed = 0.5;
+   private double maxSpeed = 0.8;
 
    public Feeder(){
       this.miniNeo = new SparkMax(MINI_NEO_ID, MotorType.kBrushless);

@@ -24,11 +24,12 @@ public class FeederControls extends Command {
 
    @Override
    public void execute() {
-      if (xbox.getYButton() && !xbox.getAButton()){
+      if (xbox.getYButton()){
          feeder.set(speed);
-      }
-      if (xbox.getAButton() && !xbox.getYButton()){
+      } else if (xbox.getAButton()){
          feeder.set(-speed);
+      } else {
+         feeder.set(0);
       }
    }
 
